@@ -1,3 +1,4 @@
+import logging
 from unittest import TestCase
 
 from logmixin.logmixin import LogMixin
@@ -8,8 +9,11 @@ class TestLogMixin(TestCase):
 
         class TestClass(LogMixin):
             def test(self):
-                return self.get_logger()
+                logger = self.get_logger()
+                logger.info("Hello, world!")
+                return logger
 
+        logging.basicConfig(level=logging.DEBUG)
         tc = TestClass()
-        logger = tc.test()
-        self.assertEqual(logger.name, "test_logmixin.TestClass.test")
+        _logger = tc.test()
+        self.assertEqual(_logger.name, "test_logmixin.TestClass.test")
