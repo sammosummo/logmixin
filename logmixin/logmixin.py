@@ -24,7 +24,13 @@ class LogMixin(object):
         if isinstance(f, FrameType):
 
             a: str = f.f_globals["__name__"]
-            b: str = f.f_locals["self"].__class__.__name__
+            try:
+                b: str = f.f_locals["self"].__class__.__name__
+            except KeyError:
+                try:
+                    b: str = f.f_locals["cls"].__name__
+                except KeyError:
+                    b: str = "unknown"
             c: str = f.f_code.co_name
             return logging.getLogger(f"{a}.{b}.{c}")
 
