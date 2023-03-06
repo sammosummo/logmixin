@@ -39,3 +39,13 @@ class LogMixin(object):
             logger: logging.Logger = logging.getLogger(__name__)
             logger.warning("Could not get logger name from frame; using __name__.")
             return logger
+
+
+def get_logger() -> logging.Logger:
+    """Returns a logger with the name of the module and function that created it."""
+    fr: FrameType | None = inspect.currentframe().f_back
+
+    mo: str = fr.f_globals["__name__"]
+    fu: str = fr.f_code.co_name
+
+    return logging.getLogger(f"{mo}.{fu}")
