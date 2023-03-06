@@ -1,1 +1,1 @@
-from logmixin.logmixin import LogMixin
+from logmixin.logmixin import get_logger, LogMixin
